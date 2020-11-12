@@ -43,15 +43,18 @@ class Score(object):
         # Calculating euclidean distance per body part to apply weights
         body_part_scores = []
         for body_part_i in range(17):
-            v1_part, v2_part = [False * i * 2], [False * j * 2]
-            for k, new_frame, reference_frame in enumerate(best_path):
+            v1_part, v2_part = [False] * i * 2, [False] * j * 2
+            for k, t in enumerate(best_path):
+                new_frame, reference_frame = t
                 v1_part[k * 2] = new_video_coordinates[new_frame][body_part_i * 2]
                 v1_part[k * 2 + 1] = new_video_coordinates[new_frame][body_part_i * 2 + 1]
                 v2_part[k * 2] = reference_coordinates[reference_frame][body_part_i * 2]
                 v2_part[k * 2 + 1] = reference_coordinates[reference_frame][body_part_i * 2 + 1]
-            body_part_scores.append(ed.distance(v1_part, v2_part))
+            score = ed.distance(v1_part, v2_part)
+            print(score)
+            body_part_scores.append(score)
 
-        return self.apply_weights(weights, body_part_scores), scores
+        return self.apply_weights(weights, body_part_scores), body_part_scores
 
     def apply_weights(self, weights, scores):
         return list(map(lambda z: z[0] * z[1], zip(np.array(weights), scores)))
