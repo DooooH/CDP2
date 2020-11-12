@@ -18,12 +18,10 @@ class Score(object):
     def dtwdis_new(self, model_points, input_points):
         return self.percentage_score(dtw_ndim.distance(model_points, input_points))
 
-
     def normalize(self, input_test):
         for k in range(0, 17):
             input_test[:, k] = input_test[:, k] / np.linalg.norm(input_test[:, k])
         return input_test
-
 
     def compare_separate(self, new_video_coordinates, reference_coordinates, i, j, weights):
         # new_video_coordinates = self.normalize(new_video_coordinates)
@@ -33,13 +31,17 @@ class Score(object):
             scores.append(self.dtwdis(new_video_coordinates[:, k], reference_coordinates[:, k], i, j))
         return self.apply_weights(weights, scores), scores
 
-
     def compare_34dim(self, new_video_coordinates, reference_coordinates, i, j, weights):
         # new_video_coordinates = self.normalize(new_video_coordinates)
         new_video_coordinates = new_video_coordinates.reshape(i, 34)
         reference_coordinates = reference_coordinates.reshape(j, 34)
         best_path = dtw.best_path(dtw_ndim.warping_paths(new_video_coordinates, reference_coordinates)[1])
-        dtw_visualisation.plot_warping(new_video_coordinates, reference_coordinates, best_path)
+        for body_part in range(17):
+            dtw_visualisation.plot_warping(new_video_coordinates[:, 2 * body_part], reference_coordinates[:, 2 *body_part],
+                                           best_path, "warp" + str(2 * body_part) + ".png")
+            dtw_visualisation.plot_warping(new_video_coordinates[:, 2 * body_part + 1],
+                                           reference_coordinates[:, 2 * body_part + 1], best_path,
+                                           "warp" + str(2 * body_part + 1) + ".png")
         # Calculating euclidean distance per body part to apply weights
         max_frames = max(i, j)
         body_part_scores = []
