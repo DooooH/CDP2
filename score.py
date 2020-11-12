@@ -53,7 +53,7 @@ class Score(object):
                 v2_part[k * 2 + 1] = reference_coordinates[reference_frame][body_part_i * 2 + 1]
             v1_part = v1_part / np.linalg.norm(v1_part)
             v2_part = v2_part / np.linalg.norm(v2_part)
-            score = ed.distance(v1_part, v2_part)
+            score = self.percentage_score(ed.distance(v1_part, v2_part))
             print(score)
             body_part_scores.append(score)
 
