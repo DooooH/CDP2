@@ -4,6 +4,7 @@ from dtaidistance import dtw, dtw_ndim, ed
 
 class Score(object):
     def percentage_score(self, score):  # To be replaced with a better scoring algorithm, if found in the future
+        score = score / np.sqrt(2)
         percentage = 100 - (score * 100)
         return int(percentage)
 
@@ -13,7 +14,6 @@ class Score(object):
         model_points = model_points / np.linalg.norm(model_points)
         input_points = input_points / np.linalg.norm(input_points)
         return self.percentage_score(dtw.distance(model_points, input_points))
-
 
     def dtwdis_new(self, model_points, input_points):
         return self.percentage_score(dtw_ndim.distance(model_points, input_points))
@@ -51,6 +51,8 @@ class Score(object):
                 v1_part[k * 2 + 1] = new_video_coordinates[new_frame][body_part_i * 2 + 1]
                 v2_part[k * 2] = reference_coordinates[reference_frame][body_part_i * 2]
                 v2_part[k * 2 + 1] = reference_coordinates[reference_frame][body_part_i * 2 + 1]
+            v1_part = v1_part / np.linalg.norm(v1_part)
+            v2_part = v2_part / np.linalg.norm(v2_part)
             score = ed.distance(v1_part, v2_part)
             print(score)
             body_part_scores.append(score)
