@@ -36,14 +36,15 @@ class Score(object):
 
     def compare_34dim(self, new_video_coordinates, reference_coordinates, i, j, weights):
         # new_video_coordinates = self.normalize(new_video_coordinates)
-        scores = []
         new_video_coordinates = new_video_coordinates.reshape(i, 34)
         reference_coordinates = reference_coordinates.reshape(j, 34)
         best_path = dtw.best_path(dtw_ndim.warping_paths(new_video_coordinates, reference_coordinates)[1])
         # Calculating euclidean distance per body part to apply weights
+        max_frames = max(i, j)
         body_part_scores = []
         for body_part_i in range(17):
-            v1_part, v2_part = [False] * i * 2, [False] * j * 2
+            v1_part, v2_part = [False] * max_frames * 2, [False] * max_frames * 2
+            print(len(v1_part), len(v2_part))
             for k, t in enumerate(best_path):
                 new_frame, reference_frame = t
                 v1_part[k * 2] = new_video_coordinates[new_frame][body_part_i * 2]
