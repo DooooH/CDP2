@@ -1,5 +1,5 @@
 import numpy as np
-from dtaidistance import dtw, dtw_ndim, ed
+from dtaidistance import dtw, dtw_ndim, ed, dtw_visualisation
 
 
 class Score(object):
@@ -39,6 +39,7 @@ class Score(object):
         new_video_coordinates = new_video_coordinates.reshape(i, 34)
         reference_coordinates = reference_coordinates.reshape(j, 34)
         best_path = dtw.best_path(dtw_ndim.warping_paths(new_video_coordinates, reference_coordinates)[1])
+        dtw_visualisation.plot_warping(new_video_coordinates, reference_coordinates, best_path)
         # Calculating euclidean distance per body part to apply weights
         max_frames = max(i, j)
         body_part_scores = []

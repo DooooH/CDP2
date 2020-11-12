@@ -34,6 +34,8 @@ class get_Score(object):
                 ret_val, image = cap.read()
                 if ret_val:
                     input_points = self.pose.getpoints(image, sess, model_cfg, model_outputs)
+                    if len(input_points) == 0:
+                        continue
                     input_new_coords = np.asarray(self.pose.roi(input_points)[0:34]).reshape(17, 2)
                     self.new_video_coordinates.append(input_new_coords)
                     new_video_frames = new_video_frames + 1
