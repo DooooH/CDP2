@@ -33,10 +33,10 @@ def main():
     with open('weights.json') as json_file:
         weights = json.load(json_file)["weights"]
 
-	s = sum(weights)
-	weights = [w/s for w in weights]
+        s = sum(weights)
+        weights = [w / s for w in weights]
 
-    with tf.Session() as sess:
+    with tf.compat.v1.Session() as sess:
         model_cfg, model_outputs = posenet.load_model(101, sess)
 
         cap = cv2.VideoCapture(args["video"])

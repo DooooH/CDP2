@@ -29,6 +29,7 @@ class Score(object):
         # new_video_coordinates = self.normalize(new_video_coordinates)
         scores = []
         for k in range(0, 17):
+            # k 번째 관절
             scores.append(self.dtwdis(new_video_coordinates[:, k], reference_coordinates[:, k], i, j))
         return self.apply_weights(weights, scores), scores
 

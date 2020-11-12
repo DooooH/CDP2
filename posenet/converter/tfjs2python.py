@@ -163,7 +163,7 @@ def convert(model_id, model_dir, check=False):
         variables = load_variables(chkpoint)
 
         init = tf.global_variables_initializer()
-        with tf.Session() as sess:
+        with tf.compat.v1.Session() as sess:
             sess.run(init)
             saver = tf.train.Saver()
 
