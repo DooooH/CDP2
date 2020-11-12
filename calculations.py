@@ -14,7 +14,7 @@ class get_Score(object):
         self.score = Score()
         self.saved_pose = pickle.load(open(lookup, 'rb'))
         self.weights = self.saved_pose["weights"]
-        self.input_test = []
+        self.new_video_coordinates = []
 
     def get_action_coords_from_dict(self, action):
         for k, v in self.saved_pose.items():
@@ -25,20 +25,22 @@ class get_Score(object):
     def calculate_Score(self, video, action):
         with tf.compat.v1.Session() as sess:
             model_cfg, model_outputs = posenet.load_model(101, sess)
-            model_array, j = self.get_action_coords_from_dict(action)
+            reference_coordinates, reference_video_frames = self.get_action_coords_from_dict(action)
             cap = cv2.VideoCapture(video)
-            i = 0
+            new_video_frames = 0
             if cap.isOpened() is False:
                 print("error in opening video")
             while cap.isOpened():
                 ret_val, image = cap.read()
                 if ret_val:
-                    input_points = self.pose.getpoints(cv2.resize(image, (372, 495)), sess, model_cfg, model_outputs)
+                    input_points = self.pose.getpoints(image, sess, model_cfg, model_outputs)
                     input_new_coords = np.asarray(self.pose.roi(input_points)[0:34]).reshape(17, 2)
-                    self.input_test.append(input_new_coords)
-                    i = i + 1
+                    self.new_video_coordinates.append(input_new_coords)
+                    new_video_frames = new_video_frames + 1
                 else:
                     break
             cap.release()
-            final_score, score_list = self.score.compare(np.asarray(self.input_test), np.asarray(model_array), i, j, self.weights)
+            final_score, score_list = self.score.compare(np.asarray(self.new_video_coordinates),
+                                                         np.asarray(reference_coordinates),
+                                                         new_video_frames, reference_video_frames, self.weights)
         return final_score, score_list
