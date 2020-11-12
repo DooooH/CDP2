@@ -1,5 +1,5 @@
 import numpy as np
-from dtaidistance import dtw, dtw_ndim
+from dtaidistance import dtw, dtw_ndim, ed
 
 
 class Score(object):
@@ -33,12 +33,25 @@ class Score(object):
             scores.append(self.dtwdis(new_video_coordinates[:, k], reference_coordinates[:, k], i, j))
         return self.apply_weights(weights, scores), scores
 
+
     def compare_34dim(self, new_video_coordinates, reference_coordinates, i, j, weights):
         # new_video_coordinates = self.normalize(new_video_coordinates)
         scores = []
-        for k in range(0, 17):
-            scores.append(self.dtwdis(new_video_coordinates[:, k], reference_coordinates[:, k], i, j))
-        return self.apply_weights(weights, scores), scores
+        new_video_coordinates = new_video_coordinates.reshape(i, 34)
+        reference_coordinates = reference_coordinates.reshape(j, 34)
+        best_path = dtw.best_path(dtw_ndim.warping_paths(new_video_coordinates, reference_coordinates)[1])
+        # Calculating euclidean distance per body part to apply weights
+        body_part_scores = []
+        for body_part_i in range(17):
+            v1_part, v2_part = [False * i * 2], [False * j * 2]
+            for k, new_frame, reference_frame in enumerate(best_path):
+                v1_part[k * 2] = new_video_coordinates[new_frame][body_part_i * 2]
+                v1_part[k * 2 + 1] = new_video_coordinates[new_frame][body_part_i * 2 + 1]
+                v2_part[k * 2] = reference_coordinates[reference_frame][body_part_i * 2]
+                v2_part[k * 2 + 1] = reference_coordinates[reference_frame][body_part_i * 2 + 1]
+            body_part_scores.append(ed.distance(v1_part, v2_part))
+
+        return self.apply_weights(weights, body_part_scores), scores
 
     def apply_weights(self, weights, scores):
         return list(map(lambda z: z[0] * z[1], zip(np.array(weights), scores)))
