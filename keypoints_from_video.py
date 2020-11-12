@@ -54,8 +54,6 @@ def main():
                 input_new_coords = input_new_coords[0:34]
                 input_new_coords = np.asarray(input_new_coords).reshape(17, 2)
                 coordinate_list.append(input_new_coords)
-                cv2.imshow("black", input_black_image)
-                cv2.waitKey(1)
                 i = i + 1
             else:
                 break
@@ -63,7 +61,6 @@ def main():
 
         coordinate_list = np.array(coordinate_list)
 
-        cv2.destroyAllWindows()
         print(coordinate_list)
         print(coordinate_list.shape)
         print("Lookup Table Created")
