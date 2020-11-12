@@ -1,0 +1,19 @@
+{
+  "nose": 1,
+  "leftEye" : 1,
+  "rightEye" : 1,
+  "leftEar" : 1,
+  "rightEar" : 1,
+  "leftShoulder" : 1,
+  "rightShoulder" : 1,
+"leftElbow" : 1,
+"rightElbow" : 1,
+"leftWrist" : 1,
+"rightWrist" : 1,
+"leftHip" : 1,
+"rightHip" : 1,
+"leftKnee" : 1,
+"rightKnee" : 1,
+"leftAnkle" : 1,
+"rightAnkle" : 1
+}
