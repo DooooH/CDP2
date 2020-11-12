@@ -40,7 +40,7 @@ class get_Score(object):
                 else:
                     break
             cap.release()
-            final_score, score_list = self.score.compare_separate(np.asarray(self.new_video_coordinates),
+            final_score, score_list = self.score.compare_34dim(np.asarray(self.new_video_coordinates),
                                                          np.asarray(reference_coordinates),
                                                          new_video_frames, reference_video_frames, self.weights)
         return final_score, score_list
