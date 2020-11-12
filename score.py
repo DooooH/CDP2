@@ -13,6 +13,13 @@ class Score(object):
 		model_points = model_points/ np.linalg.norm(model_points)
 		input_points = input_points/np.linalg.norm(input_points)
 		return self.percentage_score(dtw.distance(model_points, input_points))
+    
+    def dtwdis_new(self,model_points,input_points,i,j):
+		model_points = model_points.reshape(2*j,)
+		input_points = input_points.reshape(2*i,)
+		model_points = model_points/ np.linalg.norm(model_points)
+		input_points = input_points/np.linalg.norm(input_points)
+		return self.percentage_score(dtw.distance(model_points, input_points))
 
 	def normalize(self,input_test):
 		for k in range(0,17):	
@@ -24,7 +31,7 @@ class Score(object):
 		scores = []
 		for k in range(0,17):
 			scores.append(self.dtwdis(ip[:,k],model[:,k],i,j))	
-		return np.mean(scores),scores
+		return self.apply_weights(weights, scores),scores
 
 	def apply_weights(self, weights, scores):
 		return list(map(lambda z: z[0]*z[1], zip(np.array(weights), scores)))

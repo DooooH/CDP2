@@ -33,10 +33,10 @@ def main():
     with open('weights.json') as json_file:
         weights = json.load(json_file)["weights"]
 
-	s = sum(weights)
-	weights = [w/s for w in weights]
+    s = sum(weights)
+    weights = [w/s for w in weights]
 
-    with tf.Session() as sess:
+    with tf.compat.v1.Session() as sess:
         model_cfg, model_outputs = posenet.load_model(101, sess)
 
         cap = cv2.VideoCapture(args["video"])
@@ -54,8 +54,8 @@ def main():
                 input_new_coords = input_new_coords[0:34]
                 input_new_coords = np.asarray(input_new_coords).reshape(17, 2)
                 coordinate_list.append(input_new_coords)
-                cv2.imshow("black", input_black_image)
-                cv2.waitKey(1)
+                #cv2.imshow("black", input_black_image)
+                #cv2.waitKey(1)
                 i = i + 1
             else:
                 break
@@ -63,7 +63,7 @@ def main():
 
         coordinate_list = np.array(coordinate_list)
 
-        cv2.destroyAllWindows()
+        #cv2.destroyAllWindows()
         print(coordinate_list)
         print(coordinate_list.shape)
         print("Lookup Table Created")
