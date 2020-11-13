@@ -108,6 +108,21 @@ class Pose(object):
 				max_y = item[1]
 		return [(int(min_x),int(min_y)),(int(max_x),int(min_y)),(int(max_x),int(max_y)),(int(min_x),int(max_y))]
 
+	def orgini_normalize(self,coords):
+		for item in coords:
+			if item[0] < min_x:
+				min_x = item[0]
+
+			if item[0] > max_x:
+				max_x = item[0]
+
+			if item[1] < min_y:
+				min_y = item[1]
+
+			if item[1] > max_y:
+				max_y = item[1]
+		return [(int(min_x),int(min_y)),(int(max_x),int(min_y)),(int(max_x),int(max_y)),(int(min_x),int(max_y))]
+
 	def roi(self,imagepoints):
 		coords_new_reshaped = imagepoints[0:34]
 		coords_new = np.asarray(coords_new_reshaped).reshape(17,2)

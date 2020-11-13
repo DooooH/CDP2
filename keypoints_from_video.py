@@ -49,7 +49,7 @@ def main():
             if ret_val:
                 input_points, input_black_image = pose.getpoints_vis(image, sess, model_cfg, model_outputs)
                 input_points = input_points[0:34]
-                print(input_points)
+                # print(input_points)
                 input_new_coords = pose.roi(input_points)
                 input_new_coords = input_new_coords[0:34]
                 input_new_coords = np.asarray(input_new_coords).reshape(17, 2)
@@ -61,8 +61,8 @@ def main():
 
         coordinate_list = np.array(coordinate_list)
 
-        print(coordinate_list)
-        print(coordinate_list.shape)
+        # print(coordinate_list)
+        # print(coordinate_list.shape)
         print("Lookup Table Created")
         file = open(args["lookup"], 'wb')
         pickle.dump({args["activity"]: coordinate_list, "weights": weights}, file)
