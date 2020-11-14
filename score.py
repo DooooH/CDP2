@@ -8,6 +8,11 @@ class Score(object):
         percentage = 100 - (score * 100)
         return int(percentage)
 
+    def weighted_percentage_score(self, score):  # To be replaced with a better scoring algorithm, if found in the future
+        score = score / np.sqrt(2)
+        percentage = 100 - (score * 100)
+        return int(percentage)
+
     def dtwdis(self, model_points, input_points, i, j):
         model_points = model_points.reshape(2 * j, )
         input_points = input_points.reshape(2 * i, )
@@ -43,11 +48,12 @@ class Score(object):
                                            reference_coordinates[:, 2 * body_part + 1], best_path,
                                            "warp" + str(2 * body_part + 1) + ".png")
         # Calculating euclidean distance per body part to apply weights
-        max_frames = max(i, j)
+        # max_frames = max(i, j)
         body_part_scores = []
         for body_part_i in range(17):
-            v1_part, v2_part = [False] * max_frames * 2, [False] * max_frames * 2
-            print(len(v1_part), len(v2_part))
+            v1_part, v2_part = [False] * len(best_path) * 2, [False] * len(best_path) * 2
+            print(len(v1_part), len(v2_part), len(best_path))
+            print(best_path)
             for k, t in enumerate(best_path):
                 new_frame, reference_frame = t
                 v1_part[k * 2] = new_video_coordinates[new_frame][body_part_i * 2]

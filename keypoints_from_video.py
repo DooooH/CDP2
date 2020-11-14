@@ -1,3 +1,5 @@
+import os
+
 import tensorflow as tf
 import cv2
 import time
@@ -48,6 +50,9 @@ def main():
             ret_val, image = cap.read()
             if ret_val:
                 input_points, input_black_image = pose.getpoints_vis(image, sess, model_cfg, model_outputs)
+                cv2.imwrite(
+                    './test_video' + str(i) + '.jpg',
+                    input_black_image)
                 input_points = input_points[0:34]
                 # print(input_points)
                 input_new_coords = pose.roi(input_points)

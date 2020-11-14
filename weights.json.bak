@@ -1,19 +1,21 @@
 {
-  "nose": 1,
-  "leftEye" : 1,
-  "rightEye" : 1,
-  "leftEar" : 1,
-  "rightEar" : 1,
-  "leftShoulder" : 1,
-  "rightShoulder" : 1,
-"leftElbow" : 1,
-"rightElbow" : 1,
-"leftWrist" : 1,
-"rightWrist" : 1,
-"leftHip" : 1,
-"rightHip" : 1,
-"leftKnee" : 1,
-"rightKnee" : 1,
-"leftAnkle" : 1,
-"rightAnkle" : 1
+  "nose": 1,            01      0
+  "leftEye" : 1,        23      1
+  "rightEye" : 1,       45      2
+  "leftEar" : 1,        67      3
+  "rightEar" : 1,       89      4
+
+  "leftShoulder" : 1,   1011    5
+  "rightShoulder" : 1,  1213    6
+"leftElbow" : 1,        1415    7
+"rightElbow" : 1,       1617    8
+"leftWrist" : 1,        1819    9
+"rightWrist" : 1,       2021    10
+
+"leftHip" : 1,          2223    11
+"rightHip" : 1,         2425    12
+"leftKnee" : 1,         2627    13
+"rightKnee" : 1,        2829    14
+"leftAnkle" : 1,        3031    15
+"rightAnkle" : 1        3233    16
 }

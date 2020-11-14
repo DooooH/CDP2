@@ -209,9 +209,9 @@ def convert(model_id, model_dir, check=False):
                 )
 
                 print("Test image stats")
-                print(input_image)
-                print(input_image.shape)
-                print(np.mean(input_image))
+                # print(input_image)
+                # print(input_image.shape)
+                # print(np.mean(input_image))
 
                 heatmaps_result = heatmaps_result[0]
 

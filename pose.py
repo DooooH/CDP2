@@ -9,7 +9,7 @@ class Pose(object):
 		pos_temp_data=[]
 		output_stride = model_cfg['output_stride']
 		input_image, draw_image, output_scale = posenet.read_imgfile(
-			image_input, scale_factor=0.25, output_stride=output_stride)
+			image_input, scale_factor=0.5, output_stride=output_stride)
 
 		heatmaps_result, offsets_result, displacement_fwd_result, displacement_bwd_result = sess.run(
 			model_outputs,
@@ -47,7 +47,7 @@ class Pose(object):
 		
 		
 		input_image, draw_image, output_scale = posenet.read_imgfile(
-			image_input, scale_factor=0.25, output_stride=output_stride)
+			image_input, scale_factor=0.5, output_stride=output_stride)
 
 		heatmaps_result, offsets_result, displacement_fwd_result, displacement_bwd_result = sess.run(
 			model_outputs,
